@@ -25,9 +25,8 @@ int Card::rankToInt() const {
 }
 
 bool Card::operator<(const Card& other) const {
-    if (this->suitToInt() != other.suitToInt()) {
+    if (this->suitToInt() != other.suitToInt())
         return this->suitToInt() < other.suitToInt();
-    }
     return this->rankToInt() < other.rankToInt();
 }
 
@@ -41,3 +40,8 @@ bool Card::operator==(const Card& other) const {
 
 char Card::getSuit() const { return suit; }
 std::string Card::getVal() const { return val; }
+
+std::ostream& operator<<(std::ostream& os, const Card& c) {
+    os << c.suit << " " << c.val;
+    return os;
+}

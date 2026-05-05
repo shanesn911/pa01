@@ -26,7 +26,7 @@ void CardBST::insert(const Card& c) {
         prev = curr;
         if (c < curr->card) curr = curr->left;
         else if (curr->card < c) curr = curr->right;
-        else return; 
+        else return; // duplicate
     }
     Node* newNode = new Node(c);
     newNode->parent = prev;
@@ -43,11 +43,19 @@ void CardBST::remove(const Card& c) {
     if (!curr) return;
 
     if (curr->left && curr->right) {
+        // Find in-order successor
         Node* successor = curr->right;
         while (successor->left) successor = successor->left;
         Card successorCard = successor->card;
         remove(successorCard);
-        curr->card = successorCard;
+        // After recursive remove, curr might be stale if it was the successor,
+        // so re-find curr
+        Node* target = root;
+        while (target && !(target->card == c)) {
+            if (c < target->card) target = target->left;
+            else target = target->right;
+        }
+        if (target) target->card = successorCard;
     } else {
         Node* child = curr->left ? curr->left : curr->right;
         if (!curr->parent) root = child;
@@ -69,7 +77,7 @@ bool CardBST::contains(const Card& c) const {
 
 void CardBST::printInOrder() const {
     for (Iterator it = begin(); it != end(); ++it) {
-        std::cout << (*it).getSuit() << " " << (*it).getVal() << std::endl;
+        std::cout << *it << std::endl;
     }
 }
 
@@ -120,3 +128,34 @@ CardBST::Iterator CardBST::rbegin() const {
 }
 
 CardBST::Iterator CardBST::rend() const { return Iterator(nullptr); }
+
+void playGame(CardBST& alice, CardBST& bob) {
+    bool anyMatch = true;
+    while (anyMatch) {
+        anyMatch = false;
+
+        // Alice iterates forward (smallest to largest), finds first match with Bob
+        for (CardBST::Iterator it = alice.begin(); it != alice.end(); ++it) {
+            if (bob.contains(*it)) {
+                std::cout << "Alice picked matching card " << *it << std::endl;
+                Card matched = *it;
+                alice.remove(matched);
+                bob.remove(matched);
+                anyMatch = true;
+                break;
+            }
+        }
+
+        // Bob iterates reverse (largest to smallest), finds first match with Alice
+        for (CardBST::Iterator it = bob.rbegin(); it != bob.rend(); --it) {
+            if (alice.contains(*it)) {
+                std::cout << "Bob picked matching card " << *it << std::endl;
+                Card matched = *it;
+                alice.remove(matched);
+                bob.remove(matched);
+                anyMatch = true;
+                break;
+            }
+        }
+    }
+}
