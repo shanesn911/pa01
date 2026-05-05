@@ -1,7 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include <iostream>
 #include <string>
 
 class Card {
@@ -22,6 +21,5 @@ private:
     int suitToInt() const;
     int rankToInt() const;
 };
-
 
 #endif

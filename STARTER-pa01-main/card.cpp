@@ -1,15 +1,15 @@
 #include "card.h"
-#include <string>
-#include <iostream>
 
 Card::Card(char s, std::string v) : suit(s), val(v) {}
 
 int Card::suitToInt() const {
-    if (suit == 'c') return 1;
-    if (suit == 'd') return 2;
-    if (suit == 's') return 3;
-    if (suit == 'h') return 4;
-    return 0;
+    switch (suit) {
+        case 'c': return 1;
+        case 'd': return 2;
+        case 's': return 3;
+        case 'h': return 4;
+        default:  return 0;
+    }
 }
 
 int Card::rankToInt() const {
@@ -17,7 +17,11 @@ int Card::rankToInt() const {
     if (val == "j") return 11;
     if (val == "q") return 12;
     if (val == "k") return 13;
-    return std::stoi(val);
+    try {
+        return std::stoi(val);
+    } catch (...) {
+        return 0;
+    }
 }
 
 bool Card::operator<(const Card& other) const {
@@ -37,4 +41,3 @@ bool Card::operator==(const Card& other) const {
 
 char Card::getSuit() const { return suit; }
 std::string Card::getVal() const { return val; }
-
