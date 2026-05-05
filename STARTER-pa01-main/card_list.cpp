@@ -80,8 +80,7 @@ CardBST::Iterator& CardBST::Iterator::operator--() {
 }
 
 const Card& CardBST::Iterator::operator*() const { return curr->card; }
-bool CardBST::Iterator::operator==(const Iterator& other) const { return curr == other.curr; }
-bool CardBST::Iterator::operator!=(const Iterator& other) const { return curr != other.curr; }
+const CardBST::Iterator::operator!=(const Iterator& other) const { return curr != other.curr; }
 
 CardBST::Iterator CardBST::begin() const {
     Node* n = root;
