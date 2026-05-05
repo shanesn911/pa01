@@ -22,19 +22,37 @@ int main(int argv, char** argc){
     cout << "Could not open file " << argc[2];
     return 1;
   }
+  CardBST alice_hand;
+  CardBST bob_hand;
 
   //Read each file
   while (getline (cardFile1, line) && (line.length() > 0)){
-
+    char suit = line[0];
+    string val = line.substr(2);
+    if (!val.empty() && val[val.size() - 1] == '/r') {
+      val.erase(val.size() - 1);
+    }
+    alice_hand.insert(Card(suit, val));
   }
   cardFile1.close();
 
 
   while (getline (cardFile2, line) && (line.length() > 0)){
-
+    char suit = line[0];
+    string val = line.substr(2);
+    if (!val.empty() && val[val.size() - 1] == '/r') {
+      val.erase(val.size() - 1);
+    }
+    bob_hand.insert(Card(suit, val));
   }
   cardFile2.close();
   
+  playGame(alice_hand, bob_hand);
+  cout << endl << "Alice's cards:" << endl;
+  alice_hand.printInOrder();
+
+  cout << endl << "Bob's cards:" << endl;
+  bob_hand.printInOrder();
   
   return 0;
 }

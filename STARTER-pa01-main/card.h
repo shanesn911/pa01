@@ -1,8 +1,27 @@
-// card.h
-// Author: Your name
-// All class declarations related to defining a single card go here
-
 #ifndef CARD_H
 #define CARD_H
+
+#include <iostream>
+#include <string>
+
+class Card {
+public:
+    Card(char s = ' ', std::string v = "");
+
+    bool operator<(const Card& other) const;
+    bool operator>(const Card& other) const;
+    bool operator==(const Card& other) const;
+
+    char getSuit() const;
+    std::string getVal() const;
+
+private:
+    char suit;
+    std::string val;
+
+    int suitToInt() const;
+    int rankToInt() const;
+};
+
 
 #endif
