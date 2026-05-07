@@ -136,7 +136,9 @@ CardBST::Iterator CardBST::begin() const {
     return Iterator(n);
 }
 
-CardBST::Iterator CardBST::end() const { return Iterator(nullptr); }
+CardBST::Iterator CardBST::end() const { 
+    return Iterator(nullptr); 
+}
 
 CardBST::Iterator CardBST::rbegin() const {
     Node* n = root;
@@ -145,7 +147,9 @@ CardBST::Iterator CardBST::rbegin() const {
     return Iterator(n);
 }
 
-CardBST::Iterator CardBST::rend() const { return Iterator(nullptr); }
+CardBST::Iterator CardBST::rend() const { 
+    return Iterator(nullptr); 
+}
 
 void playGame(CardBST& alice, CardBST& bob) {
     bool anyMatch = true;
