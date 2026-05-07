@@ -28,8 +28,5 @@ card_list.o: card_list.cpp card_list.h
 card.o: card.cpp card.h
 	${CXX} ${CXXFLAGS} card.cpp -c
 
-cardh: card.h
-	@echo "card.h exists"
-
 clean:
 	rm -f game_set game *.o
