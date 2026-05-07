@@ -169,7 +169,6 @@ void test_play_game_one_empty() {
     assert(alice.contains(Card('d',"5"))); pass("one empty: alice hand unchanged");
 }
 
-// ─── main ─────────────────────────────────────────────────────────────────────
 int main() {
     cout << "=== Card ordering ===" << endl;
     test_card_ordering();
