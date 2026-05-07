@@ -17,7 +17,7 @@ void test_card_ordering() {
     assert(s3 < h9);    pass("spades 3 < hearts 9");
     assert(h9 < hj);    pass("hearts 9 < hearts jack");
     assert(!(hj < ca)); pass("hearts jack not < clubs ace");
-    assert(ca == Card('c',"a")); pass("card equality");
+    assert(ca == Card('c',"a")); pass("card equal");
 }
 
 void test_insert_contains() {
@@ -35,13 +35,13 @@ void test_insert_contains() {
     assert(!bst.contains(Card('s',"2"))); pass("multi: missing card false");
 
     bst.insert(Card('c',"a"));
-    assert(bst.contains(Card('c',"a"))); pass("duplicate insert: no crash");
+    assert(bst.contains(Card('c',"a"))); pass("duplicate insert");
 }
 
 void test_remove() {
     CardBST bst;
 
-    bst.remove(Card('c',"a")); pass("remove from empty: no crash");
+    bst.remove(Card('c',"a")); pass("remove from empty");
 
     bst.insert(Card('c',"a"));
     bst.remove(Card('c',"a"));
@@ -49,7 +49,7 @@ void test_remove() {
 
     bst.insert(Card('h',"3"));
     bst.remove(Card('d',"9"));
-    assert(bst.contains(Card('h',"3"))); pass("remove non-existent: tree intact");
+    assert(bst.contains(Card('h',"3"))); pass("remove non-existent");
 
     bst.insert(Card('c',"2"));
     bst.remove(Card('c',"2"));
@@ -73,7 +73,7 @@ void test_print_in_order() {
     cout.rdbuf(oss.rdbuf());
     bst.printInOrder();
     cout.rdbuf(orig);
-    assert(oss.str() == ""); pass("printInOrder empty: no output");
+    assert(oss.str() == ""); pass("printInOrder empty");
 
     // single node
     bst.insert(Card('c',"a"));
@@ -115,13 +115,13 @@ void test_print_in_order() {
 void test_iterator_forward() {
     CardBST bst;
 
-    assert(bst.begin() == bst.end()); pass("empty: begin==end");
+    assert(bst.begin() == bst.end()); pass("empty");
 
     bst.insert(Card('c',"5"));
     auto it = bst.begin();
-    assert(*it == Card('c',"5")); pass("single: begin deref correct");
+    assert(*it == Card('c',"5")); pass("single");
     ++it;
-    assert(it == bst.end()); pass("single: ++begin == end");
+    assert(it == bst.end()); pass("single");
 
     CardBST bst2;
     bst2.insert(Card('h',"9"));
@@ -143,13 +143,13 @@ void test_iterator_forward() {
 void test_iterator_reverse() {
     CardBST bst;
 
-    assert(bst.rbegin() == bst.rend()); pass("empty: rbegin==rend");
+    assert(bst.rbegin() == bst.rend()); pass("empty");
 
     bst.insert(Card('s',"7"));
     auto it = bst.rbegin();
-    assert(*it == Card('s',"7")); pass("single: rbegin deref correct");
+    assert(*it == Card('s',"7")); pass("single");
     --it;
-    assert(it == bst.rend()); pass("single: --rbegin == rend");
+    assert(it == bst.rend()); pass("single");
 
     CardBST bst2;
     bst2.insert(Card('h',"9"));
@@ -173,7 +173,7 @@ void test_play_game_common_cards() {
     alice.insert(Card('c',"a")); alice.insert(Card('c',"3")); alice.insert(Card('h',"10"));
     bob.insert(Card('c',"3")); bob.insert(Card('h',"10")); bob.insert(Card('d',"j"));
 
-    cout << "--- playGame with common cards ---" << endl;
+    cout << "playGame with common cards" << endl;
     playGame(alice, bob);
     assert(!alice.contains(Card('c',"3")));  pass("playGame: c 3 removed from alice");
     assert(!bob.contains(Card('c',"3")));    pass("playGame: c 3 removed from bob");
@@ -188,7 +188,7 @@ void test_play_game_no_common_cards() {
     alice.insert(Card('c',"a"));
     bob.insert(Card('h',"k"));
 
-    cout << "--- playGame with no common cards ---" << endl;
+    cout << "playGame with no common cards" << endl;
     playGame(alice, bob);
     assert(alice.contains(Card('c',"a"))); pass("no common: alice hand unchanged");
     assert(bob.contains(Card('h',"k")));   pass("no common: bob hand unchanged");
@@ -198,31 +198,31 @@ void test_play_game_one_empty() {
     CardBST alice, bob;
     alice.insert(Card('d',"5"));
 
-    cout << "--- playGame with one empty hand ---" << endl;
+    cout << "playGame with one empty hand" << endl;
     playGame(alice, bob);
     assert(alice.contains(Card('d',"5"))); pass("one empty: alice hand unchanged");
 }
 
 int main() {
-    cout << "=== Card ordering ===" << endl;
+    cout << "Card ordering" << endl;
     test_card_ordering();
 
-    cout << "\n=== BST insert/contains ===" << endl;
+    cout << "\nBST insert/contains" << endl;
     test_insert_contains();
 
-    cout << "\n=== BST remove ===" << endl;
+    cout << "\nBST remove" << endl;
     test_remove();
 
-    cout << "\n=== BST printInOrder ===" << endl;
+    cout << "\nBST printInOrder" << endl;
     test_print_in_order();
 
-    cout << "\n=== Iterator forward ===" << endl;
+    cout << "\nIterator forward" << endl;
     test_iterator_forward();
 
-    cout << "\n=== Iterator reverse ===" << endl;
+    cout << "\nIterator reverse" << endl;
     test_iterator_reverse();
 
-    cout << "\n=== playGame ===" << endl;
+    cout << "\nplayGame" << endl;
     test_play_game_common_cards();
     test_play_game_no_common_cards();
     test_play_game_one_empty();
